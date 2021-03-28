@@ -8,17 +8,20 @@ import {
 } from "react-router-dom";
 import Header from "components/Header";
 import Home from "routes/Home";
-import Tv from "routes/Tv";
+import TV from "routes/TV";
 import Search from "routes/Search";
+import Detail from "routes/Detail";
 
 const router = () => (
   <Router>
     <>
       <Header />
       <Switch>
-        <Route path="/" exact component={Home}></Route>
-        <Route path="/tv" exact component={Tv}></Route>
-        <Route path="/search" component={Search}></Route>
+        <Route path="/" exact component={Home} />
+        <Route path="/tv" exact component={TV} />
+        <Route path="/search" component={Search} />
+        <Route path="/movie/:id" component={Detail} />
+        <Route path="/show/:id" component={Detail} />
         <Redirect from="*" to="/" />
       </Switch>
     </>
