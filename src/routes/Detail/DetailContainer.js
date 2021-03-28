@@ -3,11 +3,18 @@ import DetailPresenter from "./DetailPresenter";
 import { movieApi, tvApi } from "api";
 
 class DetailContainer extends Component {
-  state = {
-    result: null,
-    error: null,
-    loading: true,
-  };
+  constructor(props) {
+    super(props);
+    const {
+      location: { pathname },
+    } = props;
+    this.state = {
+      result: null,
+      error: null,
+      loading: true,
+      isMovie: pathname.includes("/movie"),
+    };
+  }
 
   async componentDidMount() {
     const {
@@ -15,16 +22,15 @@ class DetailContainer extends Component {
         params: { id },
       },
       history: { push },
-      location: { pathname },
     } = this.props;
-    this.isMovie = pathname.includes("/movie");
+
     const parsedId = parseInt(id);
     if (isNaN(parsedId)) {
       return push("/");
     }
     let result = null;
     try {
-      ({ data: result } = await (this.isMovie
+      ({ data: result } = await (this.state.isMovie
         ? movieApi.detail(parsedId)
         : tvApi.detail(parsedId)));
     } catch (e) {
